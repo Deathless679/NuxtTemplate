@@ -1,0 +1,13 @@
+@import 'fonts';
+@import 'reset';
+
+html {
+  font-size: 10px;
+  font-family: $font-main;
+  color: $black;
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+}

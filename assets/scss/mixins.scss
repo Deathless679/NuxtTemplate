@@ -1,0 +1,77 @@
+@mixin text($size, $line: normal, $weight: 400, $color: null) {
+  font-size: $size;
+  line-height: $line;
+  font-weight: $weight;
+  color: $color;
+}
+
+@mixin hover($val: $transition-default) {
+  @media (hover: hover) {
+    transition: $val;
+
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin disabled {
+  &.disabled, &[disabled], &:disabled {
+    @content
+  }
+}
+
+@mixin active {
+  &.active, &:active {
+    @content
+  }
+}
+@mixin mobile-small {
+  @media (max-width: #{$mobile-small}) {
+    @content;
+  }
+}
+@mixin mobile {
+  @media (max-width: #{$mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$tablet}) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (max-width: #{$laptop}) {
+    @content;
+  }
+}
+@mixin laptop-small {
+  @media (max-width: #{$laptop-small}) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (max-width: #{$desktop}) {
+    @content;
+  }
+}
+
+
+
+
+@mixin ellipsis($rows: 2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $rows;
+  -webkit-box-orient: vertical;
+}
+
+@mixin flex($align: null, $justify: null) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+}
