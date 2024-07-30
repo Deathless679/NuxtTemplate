@@ -27,7 +27,11 @@ const isSelected = ref('');
 
 <template>
   <div class="main">
-
+    <modal-wrapper>
+      <template #head>
+        fsdfsdfsf
+      </template>
+    </modal-wrapper>
     <ui-select label="Select" name="select" v-model="isSelected" :options="options"/>
 
     <ui-accordion class="main__accordion" is-trigger-icon>

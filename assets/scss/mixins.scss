@@ -1,3 +1,4 @@
+// Text
 @mixin text($size, $line: normal, $weight: 400, $color: null) {
   font-size: $size;
   line-height: $line;
@@ -5,6 +6,27 @@
   color: $color;
 }
 
+@mixin ellipsis($rows: 2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $rows;
+  -webkit-box-orient: vertical;
+}
+
+// Display
+@mixin flex($align: null, $justify: null) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+@mixin grid($unit: null, $count: null) {
+  display: grid;
+  grid-template-columns: repeat($unit, $count);
+}
+
+// Modifiers
 @mixin hover($val: $transition-default) {
   @media (hover: hover) {
     transition: $val;
@@ -21,11 +43,7 @@
   }
 }
 
-@mixin active {
-  &.active, &:active {
-    @content
-  }
-}
+// Media
 @mixin mobile-small {
   @media (max-width: #{$mobile-small}) {
     @content;
@@ -62,16 +80,3 @@
 
 
 
-@mixin ellipsis($rows: 2) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: $rows;
-  -webkit-box-orient: vertical;
-}
-
-@mixin flex($align: null, $justify: null) {
-  display: flex;
-  align-items: $align;
-  justify-content: $justify;
-}
