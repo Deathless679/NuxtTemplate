@@ -1,10 +1,6 @@
-import globals from "globals";
-import tseslint from "typescript-eslint";
-import pluginVue from "eslint-plugin-vue";
+import { createConfigForNuxt } from '@nuxt/eslint-config/flat';
 
-
-export default [
-  {languageOptions: { globals: globals.browser }},
-  ...tseslint.configs.recommended,
-  ...pluginVue.configs["flat/essential"],
-];
+export default createConfigForNuxt({
+  features: {
+  },
+});
