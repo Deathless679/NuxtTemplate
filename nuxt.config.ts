@@ -32,6 +32,4 @@ export default defineNuxtConfig({
       tablet: 1024,
     },
   },
-
-  compatibilityDate: '2025-01-03',
 });

@@ -1,3 +1,1 @@
 nuxt.config.ts
-.*
-/src/composables/*
