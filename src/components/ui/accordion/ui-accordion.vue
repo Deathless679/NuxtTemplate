@@ -37,6 +37,6 @@ provide("accordion", {
 
 <template>
   <div class="ui-accordion">
-    <slot></slot>
+    <slot/>
   </div>
 </template>

@@ -18,14 +18,14 @@ withDefaults(defineProps<{
   <label class="ui-radio">
     <span class="ui-radio__container">
       <input
-          class="ui-radio__input"
           v-model="modelValue"
+          class="ui-radio__input"
           type="radio"
           :name="name"
           :value="val"
           :disabled
-      />
-      <span class="ui-radio__content"></span>
+      >
+      <span class="ui-radio__content"/>
     </span>
     <span v-if="placeholder" class="ui-radio__placeholder">{{ placeholder }}</span>
   </label>

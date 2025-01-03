@@ -24,11 +24,11 @@ withDefaults(defineProps<{
           </ui-button>
         </template>
         <template v-else>
-          <slot name="head"></slot>
+          <slot name="head"/>
         </template>
       </div>
       <div class="modal__body">
-        <slot name="default"></slot>
+        <slot name="default"/>
       </div>
     </div>
   </div>

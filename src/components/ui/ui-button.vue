@@ -15,7 +15,7 @@ const isComponents = computed(() => {
 
 <template>
   <component :is="isComponents" class="ui-button" :class="`ui-button--${variants}`" :to="href" :disabled="disabled">
-    <slot></slot>
+    <slot/>
   </component>
 </template>
 

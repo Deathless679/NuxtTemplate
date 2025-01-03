@@ -49,9 +49,9 @@ const handlerSelect = (item: any): void => {
           <ul class="ui-select__list">
             <li
                 v-for="(item, key) in options" :key="key"
-                @click="handlerSelect(item)"
                 class="ui-select__item"
                 :class="{active: modelValue === item}"
+                @click="handlerSelect(item)"
             >
               <NuxtLink v-if="item.path" :to="item.path">
                 {{ item[nameProperty] }}

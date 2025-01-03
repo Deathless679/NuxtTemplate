@@ -16,10 +16,10 @@ const setErrorImage = (): void => {
     <img
         v-if="!isErrorImage && src"
         class="ui-picture__picture"
-        @error="setErrorImage"
         :src="src"
         :title="name"
-        :alt="name"/>
+        :alt="name"
+        @error="setErrorImage">
     <ui-icon
         v-else
         class="ui-picture__picture"

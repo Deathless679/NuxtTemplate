@@ -16,8 +16,8 @@ const modelValue = defineModel<string | number>();
   <label class="ui-input">
     <span v-if="label" class="ui-input__label">{{ label }}</span>
     <input
-        class="ui-input__input"
         v-model="modelValue"
+        class="ui-input__input"
         :type="type"
         :placeholder="placeholder"
         :name="name"

@@ -17,9 +17,9 @@ const handlerAccordion = () => {
 
 <template>
   <div class="accordion-item">
-    <div @click="handlerAccordion" class="accordion-item__header">
+    <div class="accordion-item__header" @click="handlerAccordion">
       <div class="accordion-item__trigger">
-        <slot name="default"></slot>
+        <slot name="default"/>
       </div>
       <div
           v-if="options.isTriggerIcon"
@@ -30,7 +30,7 @@ const handlerAccordion = () => {
     </div>
     <transition name="accordion">
       <div v-if="isActiveItem" class="accordion-item__content">
-        <slot name="content"></slot>
+        <slot name="content"/>
       </div>
     </transition>
   </div>
