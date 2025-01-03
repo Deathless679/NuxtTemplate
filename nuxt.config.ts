@@ -32,4 +32,8 @@ export default defineNuxtConfig({
       tablet: 1024,
     },
   },
+
+  devServer: {
+    port: 1337
+  }
 });
