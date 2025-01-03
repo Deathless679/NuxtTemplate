@@ -16,6 +16,7 @@ module.exports = {
     'no-plusplus': 'off',
     'space-before-function-paren': 0,
     'space-in-brackets': ['error', 'always'],
+    'vue/multi-word-component-names': 'off',
     'max-len': ['error', 120, 2, { ignoreUrls: true }],
     'no-restricted-syntax': 'off',
     'no-continue': 'off',

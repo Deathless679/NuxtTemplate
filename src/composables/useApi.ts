@@ -1,8 +1,6 @@
 // @ts-nocheck
 import { useLocalStorage } from '@vueuse/core';
 
-const baseUrl: string = '';
-
 type Options = {
   immediate?: boolean
   onSuccess?: any
@@ -18,14 +16,16 @@ export function useApi(
     triggerWatch: undefined,
   },
   method: 'POST' | 'GET' = 'POST',
-  apiOptions: {},
-  baseApiUrl: string = baseUrl,
+  apiOptions: object = {},
+  baseApiUrl?: string,
 ) {
   const token = useLocalStorage<string>('token', '');
   const isLoading = ref<boolean>(true);
   const isFirstLoading = ref<boolean>(true);
   const response = ref<any>([]);
+  const runtimeConfig = useRuntimeConfig()
 
+  baseApiUrl = runtimeConfig.app.baseUrl
   const defaultOptions = {
     headers: {
       Authorization: `Bearer ${token.value}`,
