@@ -16,7 +16,6 @@ interface RSuccess {
 
 interface AOptions {
   immediate?: boolean;
-  hashing?: boolean;
   hashingName?: string;
   onSuccess?: (arg: RSuccess) => RSuccess;
   triggerWatch?: MultiWatchSources;
@@ -88,11 +87,9 @@ export function useApi(
 
     if (hashing) hashing.set(response.value);
 
-
     isLoading.value = false;
     isFirstLoading.value = false;
   }
-
 
   return {
     fetch: async (params = body) => await handlerFetch(fetchUrl, params, fetchOptions),
