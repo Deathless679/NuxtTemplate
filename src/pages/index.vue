@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-useApi('auth', {}, {
+useApi('auth', null, {
   immediate: true,
 });
 </script>
