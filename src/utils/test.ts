@@ -1,0 +1,1 @@
+export const getCommentsList123 = 1

@@ -1,12 +1,15 @@
-<script lang="ts" setup>
-useApi('auth', null, {
+<script lang="ts" setup async>
+
+import { getCommentsList123 } from '~/utils/test';
+
+const { data, fetch } = useApi(getCommentsList123, null, {
   immediate: true,
-});
+}, 'GET');
 </script>
 
 <template>
-  <div>
-
+  <div @click="fetch">
+    {{ data }}
   </div>
 </template>
 

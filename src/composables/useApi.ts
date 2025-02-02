@@ -2,8 +2,9 @@ import { useLocalStorage } from '@vueuse/core';
 import type { MultiWatchSources } from '@vue/runtime-core';
 import type { ComputedRef } from 'vue';
 import type { AsyncFunction } from 'type-fest/source/async-return-type';
+import type { ApiUrls } from '~/utils/api/index.dt';
 
-type ResponseType = Record<string, string> | unknown
+type ResponseType = Record<string, string> | null | unknown
 
 type ABody = Record<string, string> | null
 
@@ -16,7 +17,7 @@ interface RSuccess {
 
 interface AOptions {
   immediate?: boolean;
-  hashingName?: string;
+  cachingName?: string;
   onSuccess?: (arg: RSuccess) => RSuccess;
   triggerWatch?: MultiWatchSources;
 }
@@ -29,7 +30,7 @@ interface ResponseApi {
 }
 
 export function useApi(
-  url: string,
+  url: ApiUrls,
   body: ABody,
   options: AOptions,
   method: 'POST' | 'GET' = 'POST',
@@ -43,21 +44,13 @@ export function useApi(
   const runtimeConfig = useRuntimeConfig();
   baseApiUrl = runtimeConfig.app.baseUrl;
 
-  let hashing;
-  if (options.hashingName) {
-    hashing = handlerHashing(options.hashingName);
-    response.value = hashing.get();
-
-    if (response.value) return;
-  }
-
   const defaultOptions = {
     headers: {
       Authorization: `Bearer ${token.value}`,
     },
   };
 
-  const fetchUrl = baseApiUrl + url;
+  const fetchUrl = handlerUrl(baseApiUrl + url, method, body);
   const fetchOptions = {
     method,
     ...defaultOptions,
@@ -65,6 +58,20 @@ export function useApi(
     lazy: true,
     server: false,
   };
+
+  let caching: any;
+  if (options.cachingName) {
+    caching = handlerHashing(options.cachingName);
+    response.value = caching.get();
+
+    if (response.value) return {
+      fetch: async (params = body) => await handlerFetch(fetchUrl, params, fetchOptions),
+      isLoading: readonly(isLoading),
+      isFirstLoading: readonly(isFirstLoading),
+      data: computed(() => response.value),
+    };
+
+  }
 
   if (options.immediate) handlerFetch(fetchUrl, body, fetchOptions);
 
@@ -74,9 +81,9 @@ export function useApi(
     isLoading.value = true;
 
     response.value = await $fetch(urlFetch, {
-      body: {
+      body: method !== 'GET' ? {
         ...bodyFetch,
-      },
+      } : undefined,
       ...optionsFetchApi,
     }).catch(handlerErrorFetch);
 
@@ -85,7 +92,7 @@ export function useApi(
       isFirstLoading: isFirstLoading.value,
     });
 
-    if (hashing) hashing.set(response.value);
+    if (caching && response.value) caching.set(response.value);
 
     isLoading.value = false;
     isFirstLoading.value = false;
@@ -104,13 +111,29 @@ function handlerErrorFetch(error: Error) {
 }
 
 function handlerHashing(name: string) {
-  const hashData = useLocalStorage<string>(name, '');
+  const hashData = useLocalStorage<string>(name, 'null');
 
   return {
-    set: (response: ResponseType) => (hashData.value = JSON.stringify(response)),
-    get: () => JSON.parse(hashData.value),
-  };
+    set: (response: ResponseType) => {
+      hashData.value = JSON.stringify(response);
+    },
+    get: () => {
+      const data = JSON.parse(hashData.value);
+      return data !== 'null' ? data : undefined;
+    },
+  }
+    ;
 }
 
+function handlerUrl(url: string, method: string, body: ABody) {
+  if (method === 'GET') {
+    Object.entries(body || {}).forEach(([key, val], index) => {
+      if (key) {
+        url += !index ? `?${key}=${val}` : `&${key}=${val}`;
+      }
+    });
+  }
+  return url;
+}
 
 
